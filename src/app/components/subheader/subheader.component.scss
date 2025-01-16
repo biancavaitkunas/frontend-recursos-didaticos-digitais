@@ -1,0 +1,86 @@
+.subheader-container {
+  display: flex;
+  align-items: center;
+  background-color: #85a17d;
+  padding: 10px 20px;
+  color: #ffffff;
+}
+
+.hamburger-menu {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin-left: 15px;
+}
+
+.hamburger-menu img {
+  width: 24px;
+  height: 24px;
+}
+
+.hamburger-menu:hover {
+  transform: scale(1.2);
+}
+
+.subheader-title {
+  margin-left: 15px;
+  font-size: 20px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #e0e0e0;
+  z-index: 1000;
+  overflow-y: auto;
+  color: white;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px 4px 8px rgba(0, 0, 0, 0.2), 0px 6px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 90px;
+  font-family: var(--font-primary);
+  font-weight: 200;
+  overflow: auto;
+  overflow-y: auto;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: -35px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 0px;
+}
+
+.sidebar-item {
+  width: 240px;
+  height: 45px;
+  padding: 5px;
+  position: relative;
+  background-color: #85a17d;
+  text-align: center;
+  align-items: center;
+  display: flex;
+}
+
+.sidebar-item:hover {
+  background-color: #bbc5b8;
+  transform: scale(1.0);
+  font-weight: 250;
+}

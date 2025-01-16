@@ -1,0 +1,28 @@
+iframe {
+  width: 600px;
+  height: 355px;
+  margin-left: 10%;
+
+  border-radius: 15px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 50px;
+  padding-top: 30px;
+}
+
+.logo {
+  max-width: 40%;
+  max-height: 80px;
+}
+
+.title {
+  font-size: 25px;
+  font-weight: 300;
+  margin-left: 35px;
+  margin-top: 10px;
+  color: #53664f;
+}

@@ -1,0 +1,86 @@
+<app-header></app-header>
+<app-subheader></app-subheader>
+<div class="user-permissions-container">
+  <p class="title">Gerenciar Permissões por Usuários</p>
+  <br>
+  <div class="search-container">
+    <button (click)="openSearchModal()" class="button-default">Buscar Usuário</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Login</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Colaboração</th>
+        <th>Visualizar</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users" (click)="openPermissionsModal(user)" class="table-row">
+        <td>{{ user.login }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.email }}</td>
+        <td></td>
+        <td>{{ true ? 'OK' : '' }}</td>
+        <td>{{ true ? 'OK' : '' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="permissions-modal" *ngIf="permissionsModalOpen">
+    <div class="modal-content">
+      <span class="close-modal" (click)="closePermissionsModal()">X</span>
+      <p class="modal-title">Permissões para {{ selectedUser.firstName }}</p>
+
+      <div class="permission-section">
+        <p>Tipo de Colaboração</p>
+        <div *ngFor="let collaboration of collaborationTypes" class="items-checkbox">
+          <label>
+            <input type="checkbox" [(ngModel)]="collaboration.id" />{{ collaboration.description }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Permissões de Plataforma -->
+      <div class="permission-section">
+        <p>Permissões de Acesso</p>
+        <div *ngFor="let permission of permissions" class="items-checkbox">
+          <label>
+            <input type="checkbox" [(ngModel)]="permission.id" />{{ permission.description }}
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button (click)="savePermissions()" class="save-button">Salvar</button>
+        <button (click)="closePermissionsModal()" class="cancel-button">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Consulta (Busca) -->
+  <div class="search-modal" *ngIf="searchModalOpen">
+    <div class="modal-content">
+      <span class="close-modal" (click)="closeSearchModal()">X</span>
+      <p>Busque um Usuário</p>
+
+      <div class="search-container">
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Digite o nome ou nome de usuário"
+          (focus)="openSearchModal()" class="input-md" />
+        <button (click)="searchUsers(searchQuery)" class="button-buscar">
+          <img src="icons/search.png" alt="Pesquisar" class="icon-search-modal" />
+        </button>
+      </div>
+      <!-- Exibindo resultados da pesquisa -->
+      <div class="search-results">
+        <p *ngFor="let user of searchResults" (click)="openPermissionsModal(user)">
+          {{ user.firstName }} ({{ user.login }})
+        </p>
+        <!-- <p *ngIf="searchResults.length === 0">Nenhum usuário encontrado</p>-->
+      </div>
+    </div>
+  </div>
+</div>

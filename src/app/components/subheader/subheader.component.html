@@ -1,0 +1,16 @@
+<div class="subheader-container">
+  <button class="hamburger-menu" (click)="toggleSidebar()">
+    <img src="/icons/menu-hamburguer.png" alt="Menu" />
+  </button>
+  <span class="subheader-title">{{ currentPageTitle }}</span>
+</div>
+
+<div class="sidebar" *ngIf="sidebarOpen">
+  <button class="close-btn" (click)="toggleSidebar()">X</button>
+  <ul>
+    <li class="sidebar-item" (click)="navigateTo('cadastro-plataforma')">Cadastro de Plataforma</li>
+    <li class="sidebar-item" (click)="navigateTo('cadastro-filtro')">Cadastro de Filtros</li>
+    <li class="sidebar-item" (click)="navigateTo('permissoes-usuario')">Permissões por Usuários</li>
+    <li class="sidebar-item" (click)="navigateTo('plataformas')">Plataformas</li>
+  </ul>
+</div>

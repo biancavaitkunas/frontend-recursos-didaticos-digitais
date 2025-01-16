@@ -1,0 +1,30 @@
+<app-header></app-header>
+<app-subheader></app-subheader>
+<div class="carousel-container">
+    <p class="section-title">Últimos Assistidos</p>
+    <div class="carousel" id="carousel-last-watched">
+      <button class="nav-button left" (click)="scrollLeft('carousel-last-watched')">&#9664;</button>
+      <div class="carousel-items">
+        <div *ngFor="let item of lastWatched" class="carousel-item">
+          <img [src]="item.logoUrl" alt="{{ item.name }}">
+          <p>{{ item.name }}</p>
+        </div>
+      </div>
+      <button class="nav-button right" (click)="scrollRight('carousel-last-watched')">&#9654;</button>
+    </div>
+  </div>
+  
+  <div class="carousel-container">
+    <p class="section-title">Recomendados para Você</p>
+    <div class="carousel" id="carousel-recommended">
+      <button class="nav-button left" (click)="scrollLeft('carousel-recommended')">&#9664;</button>
+      <div class="carousel-items">
+        <div *ngFor="let item of recommended" class="carousel-item">
+          <img [src]="item.logoUrl" alt="{{ item.name }}">
+          <p>{{ item.name }}</p>
+        </div>
+      </div>
+      <button class="nav-button right" (click)="scrollRight('carousel-recommended')">&#9654;</button>
+    </div>
+  </div>
+  

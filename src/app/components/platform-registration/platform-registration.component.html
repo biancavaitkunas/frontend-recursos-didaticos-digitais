@@ -1,0 +1,156 @@
+<app-header></app-header>
+<app-subheader></app-subheader>
+<div class="main-container">
+  <div class="search-container">
+    <button (click)="openSearchModal()" class="button-default">Buscar Plataforma</button>
+  </div>
+
+  <div class="stepper-container">
+    <div *ngFor="let step of steps; let i = index" class="step">
+      <div class="circle" [class.active]="i <= currentStep" (click)="goToStep(i)">
+        {{ step }}
+      </div>
+      <div *ngIf="i < steps.length - 1" class="line" [class.completed]="i < currentStep"></div>
+    </div>
+  </div>
+
+  <div class="content-container">
+    <ng-container *ngIf="currentStep === 0">
+      <div class="platform-registration-step2-container">
+        <p class="title-relacione">Preencha os dados da Plataforma</p>
+        <div class="form-row">
+          <div class="form-column left">
+            <div class="form-group">
+              <label class="label">Nome Plataforma:</label>
+              <input type="text" class="input-lg" placeholder="Digite o nome da plataforma"
+                [(ngModel)]="platform.namePlatform" />
+            </div>
+
+            <div class="form-group">
+              <label class="label">URL Plataforma:</label>
+              <input type="text" class="input-lg" placeholder="Digite a URL da plataforma"
+                [(ngModel)]="platform.urlPlatform" />
+            </div>
+
+            <div class="form-group">
+              <label class="label">Logo Plataforma:</label>
+              <input type="file" (change)="onFileSelected($event)" id="imageInput" accept="image/*" class="input-lg"
+                placeholder="Digite a URL da plataforma" />
+            </div>
+
+            <div class="form-group">
+              <label class="label">Link Youtube:</label>
+              <input type="text" class="input-lg" placeholder="Digite a URL da plataforma"
+                [(ngModel)]="platform.urlVideo" />
+            </div>
+          </div>
+
+          <div class="form-column right">
+            <div class="form-group">
+              <label class="label">Descrição:</label>
+              <textarea class="input-lg" id="platformDescription" required [(ngModel)]="platform.descriptionPlatform"
+                name="platformDescription"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="label">Produtores Digitais:</label>
+              <select class="input-lg select-input">
+                <option value="" disabled selected>Selecione um produtor</option>
+                <option value="produtor1">Produtor 1</option>
+                <option value="produtor2">Produtor 2</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="label">Editores:</label>
+              <select class="input-lg select-input">
+                <option value="" disabled selected>Selecione um editor</option>
+                <option value="editor1">Editor 1</option>
+                <option value="editor2">Editor 2</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-navigation-step1">
+          <button (click)="goToStep(1)" type="submit" class="next-button">Avançar</button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="currentStep === 1">
+      <div class="platform-registration-step2-container">
+        <p class="title-relacione">Relacione a plataforma com os filtros desejados</p>
+        <div *ngFor="let filter of filters" class="filter-section">
+          <p class="filter-title"><img src="/icons/arrow-light-green.png" alt="Perfil" class="icon" />{{
+            filter.description }}</p>
+          <div *ngFor="let subfilter of getSubfiltersByFilter(filter)" class="subfilter-item">
+            <label>
+              <input type="checkbox" [(ngModel)]="subfilter.checked" />{{ subfilter.description }}
+            </label>
+          </div>
+        </div>
+
+        <div class="form-navigation">
+          <button type="button" class="back-button" (click)="goToStep(0)">Voltar</button>
+          <button type="submit" class="next-button" (click)="goToStep(2)">Avançar</button>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="currentStep === 2">
+      <div class="content-container">
+        <div class="platform-summary-container">
+          <p class="title-relacione">Confirme os dados da Plataforma</p>
+
+          <div class="summary-section">
+            <h3>Informações da Plataforma</h3>
+            <div *ngIf="imagePreview">
+              <img [src]="imagePreview" alt="Imagem Selecionada" style="max-width: 300px; max-height: 300px;" />
+            </div>
+            <p><strong>Nome:</strong> {{ platform.namePlatform }}</p>
+            <p><strong>URL Plataforma:</strong> {{ platform.urlPlatform }}</p>
+            <p><strong>Link YouTube:</strong> {{ platform.urlVideo }}</p>
+            <p><strong>Descrição:</strong> {{ platform.descriptionPlatform }}</p>
+            <p><strong>Produtores Digitais:</strong> {{ platform.namePlatform }}</p>
+            <p><strong>Editores:</strong> {{ platform.namePlatform }}</p>
+          </div>
+
+          <div class="summary-section">
+            <h3>Relacionamento com Filtros</h3>
+            <div *ngFor="let filter of filters">
+              <p><strong>{{ filter.description }}</strong></p>
+              <ul>
+                <li *ngFor="let subfilter of subfilters">
+                  <span *ngIf="subfilter">{{ subfilter.description }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-navigation">
+            <button type="button" class="back-button" (click)="goToStep(1)">Voltar</button>
+            <button type="button" class="next-button" (click)="insertPlatform()">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Modal de Consulta (Busca) -->
+  <div class="search-modal" *ngIf="searchModalOpen">
+    <div class="modal-content">
+      <span class="close-modal" (click)="closeSearchModal()">X</span>
+      <p>Busque uma Plataforma</p>
+
+      <div class="search-container">
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Digite o nome da plataforma" (focus)="openSearchModal()" class="input-md" />
+        <button (click)="searchPlatforms()" class="button-buscar">
+          <img src="icons/search.png" alt="Pesquisar" class="icon-search-modal" />
+        </button>
+      </div>
+      <!-- Exibindo resultados da pesquisa -->
+      <div class="search-results">
+        <p *ngFor="let platform of searchResults" (click)="populatePlatform(platform)">
+          {{ platform.namePlatform }}
+        </p>
+        <!-- <p *ngIf="searchResults.length === 0">Nenhum usuário encontrado</p> -->
+      </div>
+    </div>
+  </div>
+</div>
