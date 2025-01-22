@@ -3,7 +3,7 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { SubheaderComponent } from "../subheader/subheader.component";
 import { FormsModule } from '@angular/forms';
-import { FilterServiceService } from '../../service/filter-service.service';
+import { FilterService } from '../../service/filter.service';
 import { Filter } from '../../model/filter';
 import { SubfilterService } from '../../service/subfilter.service';
 import { Subfilter } from '../../model/subfilter';
@@ -18,39 +18,53 @@ import { ToastrService } from '../../service/toastr.service';
 })
 export class FilterRegistrationComponent implements OnInit {
 
-  public emitEventFilter = new EventEmitter();
-  public emitEventSubfilter = new EventEmitter();
-
-  constructor(private filterService: FilterServiceService, private subfilterService: SubfilterService, private toastrService: ToastrService) {}
+  constructor(private filterService: FilterService, private subfilterService: SubfilterService, private toastrService: ToastrService) {}
 
   public filter = {} as Filter
   public subfilter = {} as Subfilter
   public filters!: Filter[];
   public subfilters!: Subfilter[];
 
-  selectedFilter: any = null;
+  selectedFilter = {} as Filter;
   selectedSubfilters!: Subfilter[];
-  newSubfilterName: string = '';
   showNewFilterInput: boolean = false;
   showNewSubfilterInput: boolean = false;
+  editingFilterId: number | null = null;
+  editingSubfilterId: number | null = null;
 
-  public insertFilter() {
+  insertFilter() {
     this.filterService.insert(this.filter).subscribe(() => {
       this.toastrService.showSuccess('Filtro salvo!');
-      this.showNewSubfilterInput = false;
+      this.filter.description = '';
+      this.showNewFilterInput = false;
     });
   }
 
-  public insertSubfilter() {
+  insertSubfilter() {
     this.subfilter.filter = this.selectedFilter;
+
     this.subfilterService.insert(this.subfilter).subscribe(() => {
-      this.newSubfilterName = '';
+      this.subfilter.description = '';
       this.showNewSubfilterInput = false;
       this.toastrService.showSuccess('Subfiltro salvo!');
-    })
+    });
   }
 
-  selectFilter(filter: any) {
+  updateSubfilter(subfilter: Subfilter) {
+    this.subfilterService.update(subfilter).subscribe(() => {
+      this.toastrService.showSuccess('Subfiltro atualizado!');
+      this.editingSubfilterId = null;
+    });
+  }
+
+  updateFilter(filter: Filter) {
+    this.filterService.update(filter).subscribe(() => {
+      this.toastrService.showSuccess('Filtro atualizado!');
+      this.editingSubfilterId = null;
+    });
+  }
+
+  selectFilter(filter: Filter) {
     this.selectedFilter = filter;
     this.getSubfilterByFilter();
   }
@@ -63,20 +77,24 @@ export class FilterRegistrationComponent implements OnInit {
     this.showNewSubfilterInput = appear;
   }
 
-  editFilter(filter: any) {
-    // Lógica para editar o filtro
+  editFilter(filter: Filter) {
+    this.editingSubfilterId = filter.id;
   }
 
-  editSubfilter(subfilter: number) {
-    // Lógica para editar o subfiltro
+  editSubfilter(subfilter: Subfilter) {
+    this.editingSubfilterId = subfilter.id;
   }
 
   removeFilter(filter: Filter) {
-    this.filterService.delete(filter).subscribe();
+    this.filterService.delete(filter).subscribe(() => {
+      this.filters = this.filters.filter(filter => filter !== filter);
+    });
   }
 
   removeSubfilter(subfilter: Subfilter) {
     this.subfilterService.delete(subfilter).subscribe();
+    this.getSubfilterByFilter();
+     // this.subfilters = this.subfilters.filter(subfilter => subfilter.id !== subfilter.id);
   }
 
   public getSubfilterByFilter() {
@@ -84,8 +102,12 @@ export class FilterRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filterService.getFilters().subscribe((data) => {this.filters = data})
-    this.subfilterService.getSubfilters().subscribe((data) => {this.subfilters = data})
+    this.filterService.getAll().subscribe((data) => { this.filters = data });
+
+    this.subfilterService.entitySubject.subscribe((data) => {
+      this.subfilters = data;
+    });
+
     this.filterService.emitEventFilter.subscribe((data) => { this.filter = data });
     this.subfilterService.emitEventSubfilter.subscribe((data) => { this.subfilter = data });
   }

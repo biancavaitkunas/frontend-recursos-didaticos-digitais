@@ -3,8 +3,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, Subject, tap } from 'rxjs';
 import { Platform } from '../model/platform';
 import { BaseService } from './base.service';
-import { Subfilter } from '../model/subfilter';
 import { PlatformDTO } from '../model/platform-dto';
+import {Subfilter} from '../model/subfilter';
 
 @Injectable({
   providedIn: 'root'
@@ -12,18 +12,18 @@ import { PlatformDTO } from '../model/platform-dto';
 export class PlatformService extends BaseService<Platform> {
 
   public emitEventPlatform = new EventEmitter();
-
   public platform!: Platform;
   public plat!: PlatformDTO;
 
   constructor(http: HttpClient) {
     super(http);
-    this.endpoint =  `http://localhost:8080/platform`;
+    this.endpoint = `http://localhost:8080/platform`;
   }
 
-  public urlBase = `http://localhost:8080/platform`
+  public urlBase = `http://localhost:8080/platform`;
   private platformSubject = new Subject<Platform[]>();
   private platformDtoSubject = new Subject<PlatformDTO>();
+  private platformsDtoSubject = new Subject<PlatformDTO[]>();
 
   public create(platform: Platform, file: File, subfilters: Subfilter[]): Observable<string> {
     const formData = new FormData();
@@ -33,24 +33,26 @@ export class PlatformService extends BaseService<Platform> {
     return this.http.post<string>(`${this.urlBase}/logo`, formData);
   }
 
-  public delete(platform: Platform): Observable<void> {
-    return this.http.delete<void>(`${this.urlBase}/${platform.id}`);
+  public getPlatformDTO(platformId: number): Observable<PlatformDTO> {
+    return this.http.get<PlatformDTO>(`${this.urlBase}/dto/${platformId}`).pipe(
+      tap((dto: PlatformDTO) => {
+        this.plat = dto;
+        this.plat.logo = `data:image/png;base64,${dto.logo}`; // Aqui convertemos o logo para o formato correto
+        this.platformDtoSubject.next(this.plat); // Emite os dados corretamente
+      })
+    );
   }
 
-  public getPlatformDTO(platformId: number): Observable<PlatformDTO> {
-    this.http
-      .get<PlatformDTO>(`${this.urlBase}/dto/${platformId}`)
-      .subscribe({
-        next: (dto: PlatformDTO) => {
-          this.plat = dto;
-          this.plat.logo = `data:image/png;base64,${dto.logo}`;
-          console.log('LOGO: ' + this.plat.description)
-
-          return this.plat;
-            //dto.logo = `data:image/jpeg;base64,${dto.logo}`;
-        }
-      });
-    return this.platformDtoSubject.asObservable();
+  public getAllPlatformsDTO(): Observable<PlatformDTO[]> {
+    return this.http.get<PlatformDTO[]>(`${this.urlBase}/dto/list`).pipe(
+      tap((dtos: PlatformDTO[]) => {
+        // Para cada plataforma na lista, convertemos a logo para o formato correto
+        dtos.forEach(dto => {
+          dto.logo = `data:image/png;base64,${dto.logo}`;
+        });
+        this.platformsDtoSubject.next(dtos); // Emite a lista atualizada de plataformas
+      })
+    );
   }
 
   public getPlatforms(): Observable<Platform[]> {

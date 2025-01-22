@@ -6,7 +6,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PlatformService } from '../../service/platform.service';
 import { PlatformDTO } from '../../model/platform-dto';
 
-
 @Component({
   selector: 'app-view-platform',
   standalone: true,
@@ -19,18 +18,35 @@ export class ViewPlatformComponent implements OnInit {
   public platform!: PlatformDTO;
 
   public safeSrc: SafeResourceUrl;
-  constructor(private sanitizer: DomSanitizer, private platformService: PlatformService) { 
+  constructor(private sanitizer: DomSanitizer, private platformService: PlatformService) {
     this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/XzXxWx_1e1E");
   }
 
- ngOnInit(): void {
-  this.platformService.getPlatformDTO(13).subscribe((data) => {
-    console.log('id' + data.description)
-    this.platform = data;
-    
-  })
-  this.platformService.emitEvent.subscribe((data) => { this.platform = data });
- }
+  ngOnInit(): void {
+    // Exemplo de pegar a plataforma com ID 13
+    const platformId = 13;  // O ID pode vir de uma rota, por exemplo
+    this.platformService.getPlatformDTO(platformId).subscribe((data) => {
+      console.log('Descrição: ' + data.description);
+      console.log('Logo: ' + data.logo);
+      this.platform = data;  // Aqui estamos atribuindo a resposta do servidor
+    });
+
+    // Se você precisar propagar a plataforma de outros componentes, você pode escutar o emitEvent
+    this.platformService.emitEventPlatform.subscribe((data) => {
+      this.platform = data;
+    });
+  }
+
+
+ // ngOnInit(): void {
+ //  this.platformService.getPlatformDTO(13).subscribe((data) => {
+ //    console.log('id' + data.description)
+ //    console.log('id' + data.logo)
+ //    this.platform = data;
+ //
+ //  })
+ //  this.platformService.emitEvent.subscribe((data) => { this.platform = data });
+ // }
 }
 
 

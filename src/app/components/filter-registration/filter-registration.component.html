@@ -5,12 +5,12 @@
     <button class=" button-style new-filter-button" (click)="addNewFilter(true)">
       Novo Filtro
       <span class="icon-right">
-        <img src="/icons/new-icon.png" alt="Adicionar" class="icon" />
+        <img src="/icons/new-icon.png" alt="Adicionar" class="icon"/>
       </span>
     </button>
 
     <div *ngIf="showNewFilterInput">
-      <input class="input-lg" type="text" [(ngModel)]="filter.description" placeholder="Digite o nome do novo filtro" />
+      <input class="input-lg" type="text" [(ngModel)]="filter.description" placeholder="Digite o nome do novo filtro"/>
       <button class="save-button button-style" (click)="insertFilter()">Salvar</button>
       <button class="cancel-button button-style" (click)="addNewFilter(false)">Cancelar</button>
     </div>
@@ -19,8 +19,8 @@
       <button class="button-style filter-button" (click)="selectFilter(filter)">
         {{ filter.description }}
         <span class="icon-right">
-          <img src="/icons/edit-icon-default.png" alt="Editar" class="icon" (click)="editFilter(filter)" />
-          <img src="/icons/delete-icon-default.png" alt="Excluir" class="icon" (click)="removeFilter(filter)" />
+          <img src="/icons/edit-icon-default.png" alt="Editar" class="icon" (click)="editFilter(filter)"/>
+          <img src="/icons/delete-icon-default.png" alt="Excluir" class="icon" (click)="removeFilter(filter)"/>
         </span>
       </button>
     </div>
@@ -34,19 +34,27 @@
 
     <div *ngIf="showNewSubfilterInput">
       <input class="input-lg" type="text" [(ngModel)]="subfilter.description"
-        placeholder="Digite o nome do novo subfiltro"/>
+             placeholder="Digite o nome do novo subfiltro"/>
       <button class="save-button button-style" (click)="insertSubfilter()">Salvar</button>
       <button class="cancel-button button-style" (click)="addNewSubfilter(false)">Cancelar</button>
     </div>
 
     <ul>
-      <li *ngFor="let subfilter of subfilters" class="subfilter-item" contenteditable="true">
-        <span>{{ subfilter.description }}</span>
+      <li *ngFor="let subfilter of subfilters" class="subfilter-item">
+        <span *ngIf="subfilter.id !== editingSubfilterId">{{ subfilter.description }}</span>
+
+        <span *ngIf="subfilter.id === editingSubfilterId" contenteditable="true"
+              [(ngModel)]="subfilter.description"
+              (blur)="updateSubfilter(subfilter)"
+              (keydown.enter)="updateSubfilter(subfilter)">
+        </span>
+
         <div class="icon-container">
-          <img src="/icons/edit-icon-default.png" alt="Editar" class="icon" (click)="editSubfilter(subfilter.id)" />
-          <img src="/icons/delete-icon-default.png" alt="Excluir" class="icon" (click)="removeSubfilter(subfilter)" />
+          <img src="/icons/edit-icon-default.png" alt="Editar" class="icon" (click)="editSubfilter(subfilter)"/>
+          <img src="/icons/delete-icon-default.png" alt="Excluir" class="icon" (click)="removeSubfilter(subfilter)"/>
         </div>
       </li>
     </ul>
+
   </div>
 </div>

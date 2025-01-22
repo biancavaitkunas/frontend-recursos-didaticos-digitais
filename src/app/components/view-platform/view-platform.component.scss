@@ -1,28 +1,79 @@
-iframe {
-  width: 600px;
-  height: 355px;
-  margin-left: 10%;
+//iframe {
+//  width: 600px;
+//  height: 355px;
+//  margin-left: 10%;
+//
+//  border-radius: 15px;
+//}
+//
+//.logo-container {
+//  display: flex;
+//  align-items: flex-start;
+//  justify-content: flex-start;
+//  padding-left: 50px;
+//  padding-top: 30px;
+//}
+//
+//.logo {
+//  max-width: 40%;
+//  max-height: 80px;
+//}
+//
+//.title {
+//  font-size: 25px;
+//  font-weight: 300;
+//  margin-left: 35px;
+//  margin-top: 10px;
+//  color: #53664f;
+//}
 
-  border-radius: 15px;
+
+.platform-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.logo-container {
+.platform-header {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding-left: 50px;
-  padding-top: 30px;
+  align-items: center;
+  gap: 10px;
 }
 
-.logo {
-  max-width: 40%;
-  max-height: 80px;
+.platform-logo {
+  width: 100px;
+  height: auto;
 }
 
-.title {
+h1 {
   font-size: 25px;
-  font-weight: 300;
-  margin-left: 35px;
-  margin-top: 10px;
   color: #53664f;
+  font-family: var(--font-primary);
+  font-weight: 300;
+  margin-left: 25px;
 }
+
+.video-container iframe {
+  width: 100%;
+  height: 500px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.platform-description {
+  margin-top: 20px;
+  font-size: 1rem;
+  font-family: var(--font-primary);
+  color: #666;
+}
+
+.platform-link {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+}
+
+

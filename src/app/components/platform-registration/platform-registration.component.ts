@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Platform } from '../../model/platform';
 import { Filter } from '../../model/filter';
 import { PlatformService } from '../../service/platform.service';
-import { FilterServiceService } from '../../service/filter-service.service';
+import { FilterService } from '../../service/filter.service';
 import { SubfilterService } from '../../service/subfilter.service';
 import { Subfilter } from '../../model/subfilter';
 import { ToastrService } from '../../service/toastr.service';
@@ -39,7 +39,7 @@ export class PlatformRegistrationComponent implements OnInit {
 
   modalAberta = false;
   formulario = {
-    
+
   };
 
   abrirModal() {
@@ -53,11 +53,11 @@ export class PlatformRegistrationComponent implements OnInit {
   steps = [1, 2, 3];
   currentStep = 0;
 
-  constructor(private cdr: ChangeDetectorRef, 
-    public platformService: PlatformService, 
-    private filterService: FilterServiceService, 
-    private subfilterService: SubfilterService, 
-    private userService: AppUserService, 
+  constructor(private cdr: ChangeDetectorRef,
+    public platformService: PlatformService,
+    private filterService: FilterService,
+    private subfilterService: SubfilterService,
+    private userService: AppUserService,
     private imageService: ImageService,
     private toastrService: ToastrService) { }
 

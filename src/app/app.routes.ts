@@ -6,6 +6,7 @@ import { PlatformRegistrationComponent } from './components/platform-registratio
 import { FilterRegistrationComponent } from './components/filter-registration/filter-registration.component';
 import { UserPermissionsComponent } from './components/user-permissions/user-permissions.component';
 import { ViewPlatformComponent } from './components/view-platform/view-platform.component';
+import {PlatformListComponent} from './components/platform-list/platform-list.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: 'cadastro-filtro', component: FilterRegistrationComponent },
     { path: 'permissoes-usuario', component: UserPermissionsComponent },
     { path: 'plataformas', component: ViewPlatformComponent },
+    { path: 'plataformas-list', component: PlatformListComponent },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' },
 ];
