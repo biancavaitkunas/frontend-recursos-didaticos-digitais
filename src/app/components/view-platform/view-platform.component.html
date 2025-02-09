@@ -1,38 +1,22 @@
 <app-header></app-header>
 <app-subheader></app-subheader>
 
-<!--<div id="youtube-player"></div>-->
-<!--<script src="https://www.youtube.com/iframe_api"></script>-->
-
-<!--<div class="logo-container">-->
-<!--    <img [src]="platform.logo" alt="Logo" class="logo">-->
-<!--                <span class="title">Cadastre-se!</span>-->
-<!--</div>-->
-
-<!-- <iframe  [src]="safeSrc" width="560" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen
-      allowfullscreen></iframe> -->
-
-<!--<iframe width="560" height="315" src="https://www.youtube.com/embed/XzXxWx_1e1E" title="YouTube video player"-->
-<!--    frameborder="0"-->
-<!--    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"-->
-<!--    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>-->
-
-
 <div class="platform-container">
   <div class="platform-header">
     <img *ngIf="platform" [src]="platform.logo" alt="Logo da plataforma" class="platform-logo" />
     <h1 *ngIf="platform">{{ platform.name }}</h1>
+    <button (click)="openPdf()" class="button-default">Tutorial em PDF</button>
   </div>
 
   <div class="video-container">
-    <iframe *ngIf="platform" src="https://www.youtube.com/embed/XzXxWx_1e1E" frameborder="0" allowfullscreen></iframe>
+    <iframe *ngIf="platform" [src]="platform.urlVideo | safeUrl" allowfullscreen></iframe>
   </div>
 
-  <div class="platform-description" *ngIf="platform">
+  <div class="description" *ngIf="platform">
     <p>{{ platform.description }}</p>
   </div>
 
-  <div class="platform-link" *ngIf="platform">
+  <div class="description" *ngIf="platform">
     <a [href]="platform.urlPlatform" target="_blank">Visite a plataforma</a>
   </div>
 </div>

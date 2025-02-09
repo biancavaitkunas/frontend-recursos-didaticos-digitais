@@ -7,17 +7,16 @@ import { ToastrComponent } from '../components/toastr/toastr.component';
   providedIn: 'root'
 })
 export class ToastrService {
-
-  private overlayRef!: OverlayRef
+  private overlayRef!: OverlayRef;
 
   constructor(private overlay: Overlay, private injector: Injector) {}
 
-  showSuccess(message: string) {
+  private showToast(message: string, type: 'success' | 'error') {
     this.overlayRef = this.overlay.create({
       positionStrategy: this.overlay.position()
         .global()
-        .top('20px')
-        .centerHorizontally(),
+        .bottom('20px') // Toast no canto inferior direito
+        .right('20px'),
       hasBackdrop: false,
     });
 
@@ -25,7 +24,16 @@ export class ToastrService {
     const toastrRef: ComponentRef<ToastrComponent> = this.overlayRef.attach(toastrPortal);
 
     toastrRef.instance.message = message;
+    toastrRef.instance.type = type;
 
     setTimeout(() => this.overlayRef.detach(), 3000);
+  }
+
+  showSuccess(message: string) {
+    this.showToast(message, 'success');
+  }
+
+  showError(message: string) {
+    this.showToast(message, 'error');
   }
 }

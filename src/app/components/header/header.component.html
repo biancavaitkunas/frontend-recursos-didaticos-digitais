@@ -1,13 +1,13 @@
 <header class="custom-header">
   <img src="icons/logo.png" class="logo" alt="Logo" />
   <span class="title">Recursos Didáticos Digitais</span>
-  
+
   <div class="search-field" *ngIf="isShowSearchField">
     <input type="text" class="input-lg" placeholder="Pesquise..." />
   </div>
 
   <div class="icons">
-    <img src="/icons/search.png" alt="Buscar" class="icon search-icon" (click)="showSearchField()"/>
+    <img src="/icons/home-white.png" alt="Home" class="icon search-icon" (click)="navigateTo('/')"/>
     <span (click)="toggleUserMenu()"><img src="/icons/user.png" alt="Usuário" class="icon user-icon"/></span>
     <img src="/icons/bell.png" alt="Notificações" class="icon notification-icon" />
   </div>
@@ -16,8 +16,8 @@
     <div class="arrow-up"></div>
     <ul>
       <li (click)="navigateTo('')"><img src="/icons/user-green.png" alt="Perfil" class="menu-icon" /><a href="#">Perfil</a></li>
-      <li><img src="/icons/settings-green.png" alt="Perfil" class="menu-icon" /><a href="#">Configurações</a></li>
-      <li (click)="navigateTo('login-component')"><img src="/icons/logout-green.png" alt="Perfil" class="menu-icon" /><a href="#">Sair</a></li>
+      <li><img src="/icons/settings-green.png" alt="Configurações" class="menu-icon" /><a href="/perfil">Configurações</a></li>
+      <li (click)="logout()"><img src="/icons/logout-green.png" alt="Sair" class="menu-icon" /><a href="/login">Sair</a></li>
     </ul>
   </div>
 </header>

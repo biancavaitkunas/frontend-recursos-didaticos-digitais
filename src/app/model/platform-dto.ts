@@ -1,9 +1,11 @@
-import { Platform } from "./platform";
-
 export interface PlatformDTO {
-    name: Platform;
-    description: string;
-    urlVideo: string;
-    urlPlatform: string;
-    logo: string;
+  id: number;
+  name: string;
+  description: string;
+  urlVideo: string;
+  urlPlatform: string;
+  logo: string;
+  presentationImage: string;
+  textTutorial: string;
+  subfilters: string[]
 }

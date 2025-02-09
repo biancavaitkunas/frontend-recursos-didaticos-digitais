@@ -1,34 +1,3 @@
-.carousel-container {
-  margin: 20px 0;
-}
-
-.carousel {
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  position: relative;
-}
-
-.carousel-items {
-  margin-left: 50px;
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-.carousel-item {
-  min-width: 150px;
-  margin: 10px;
-  margin-left: 60px;
-  text-align: center;
-}
-
-.carousel-item img {
-  max-width: 100%;
-  width: 250px;
-  height: auto;
-  border-radius: 10px;
-}
-
 .nav-button {
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
@@ -59,6 +28,228 @@ p {
   margin-left: 20px;
   padding-top: 50px;
   padding-bottom: 20px;
-  font-size: 15px;
+  font-size: 18px;
   color: rgb(35, 83, 29);
 }
+
+.section {
+  margin: 20px;
+}
+
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 5px;
+  scrollbar-width: none;
+  margin-left: 30px;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none; /* Remove scrollbar para Chrome, Safari */
+}
+
+.video-card {
+  min-width: 300px;
+  max-width: 300px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.presentation {
+  width: 100%;
+  height: 170px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.scroll-btn {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.scroll-btn.left {
+  left: 0;
+}
+
+.scroll-btn.right {
+  right: 0;
+}
+
+h3 {
+  font-size: 25px;
+  font-weight: lighter;
+  font-family: var(--font-primary);
+  color: rgb(35, 83, 29);
+}
+
+body {
+  font-family: var(--font-primary);
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.input-lg {
+  width: 70%;
+  max-width: 600px;
+}
+
+.filter-icon {
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 25px;
+  margin-top: -12px;
+  margin-left: 10px;
+}
+
+/* Grid para as plataformas */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  justify-content: center;
+}
+
+.platform-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinhar tudo à esquerda */
+  padding: 15px;
+  border: 1px solid #bbc5b8;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  max-width: 300px; /* Evita que os cards fiquem muito largos */
+}
+
+.platform-item:hover {
+  background-color: #ececec;
+}
+
+.platform-info {
+  width: 100%;
+}
+
+.platform-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: normal;
+  font-family: var(--font-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adiciona "..." se ultrapassar o espaço */
+}
+
+.platform-info p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  color: #666;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limita a 3 linhas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.platform-logo {
+  width: 90%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+/* Estilos para modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-list {
+  max-height: 290px;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.filter-item {
+  margin-bottom: 10px;
+}
+
+.subfilter-item {
+  padding: 5px;
+  background: #f8f8f8;
+  border-radius: 5px;
+}
+
+.subfilters-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  bottom: 0;
+  padding: 10px;
+  margin-top: -10px;
+  border-top: none;
+}
+
+@media (max-width: 768px) {
+  .platform-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .platform-item {
+    padding: 10px;
+  }
+
+  .platform-logo {
+    width: 100%;
+    height: 100px;
+  }
+
+  .platform-info h3 {
+    font-size: 1rem;
+  }
+
+  .platform-info p {
+    font-size: 0.8rem;
+  }
+}
+
+

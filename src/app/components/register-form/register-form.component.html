@@ -9,24 +9,24 @@
         <form>
             <div class="form-row">
                 <div class="form-group">
-                    <label for="firstName" class="label">Nome</label>
-                    <input type="text" class="input-sm" placeholder="Digite seu nome..." [(ngModel)]="user.firstName" name="firstName" required />
+                    <label class="label">Nome</label>
+                    <input type="text" class="input-sm" placeholder="Digite seu nome..." [(ngModel)]="appUser.firstName" name="firstName" required />
                 </div>
                 <div class="form-group">
                     <label class="label">Sobrenome</label>
-                    <input type="text" class="input-sm" placeholder="Digite seu nome..." [(ngModel)]="user.lastName" name="lastName" required />
+                    <input type="text" class="input-sm" placeholder="Digite seu nome..." [(ngModel)]="appUser.lastName" name="lastName" required />
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label class="label">Data de Nascimento</label>
-                    <input type="date" class="input-sm date-input" [(ngModel)]="user.birthDate" name="birthDate" onfocus="(this.type='date')" onblur="(this.type='text')" required />
+                    <input type="date" class="input-sm date-input" [(ngModel)]="appUser.birthDate" name="birthDate" onfocus="(this.type='date')" onblur="(this.type='text')" required />
                 </div>
 
                 <div class="form-group">
                     <label class="label">Gênero</label>
-                    <select class="input-sm select-field" [(ngModel)]="user.gender" name="gender">
+                    <select class="input-sm select-field" [(ngModel)]="appUser.gender" name="gender">
                         <option></option>
                         <option value="F">Feminino</option>
                         <option value="M">Masculino</option>
@@ -36,19 +36,19 @@
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label class="label">User</label>
-                    <input type="text" class="input-sm" placeholder="Digite seu user..." [(ngModel)]="user.login" name="login" required />
+                    <label class="label">Usuário</label>
+                    <input type="text" class="input-sm" placeholder="Digite seu usuário..." [(ngModel)]="appUser.username" name="login" required />
                 </div>
                 <div class="form-group">
                     <label class="label">E-mail</label>
-                    <input type="text" class="input-sm" placeholder="Digite seu e-mail..." [(ngModel)]="user.email" name="email" required />
+                    <input type="text" class="input-sm" placeholder="Digite seu e-mail..." [(ngModel)]="appUser.email" name="email" required />
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label class="label">Senha</label>
-                    <input type="password" class="input-sm" placeholder="Digite sua senha..." [(ngModel)]="user.password" name="password" required />
+                    <input type="password" class="input-sm" placeholder="Digite sua senha..." [(ngModel)]="appUser.password" name="password" required />
                 </div>
 
                 <div class="form-group">

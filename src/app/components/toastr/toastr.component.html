@@ -1,3 +1,11 @@
-<div class="toastr">
-    <p>{{ message }}</p>
+<div class="toastr-container" [ngClass]="type">
+  <span class="icon">
+    <svg *ngIf="type === 'success'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M9 16.2l-4.2-4.2-1.4 1.4L9 19l11-11-1.4-1.4z"/>
+    </svg>
+    <svg *ngIf="type === 'error'" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm0-4h2V7h-2v6z"/>
+    </svg>
+  </span>
+  <span class="message">{{ message }}</span>
 </div>

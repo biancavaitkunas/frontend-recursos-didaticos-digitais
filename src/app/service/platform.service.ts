@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import {BehaviorSubject, Observable, Subject, tap} from 'rxjs';
 import { Platform } from '../model/platform';
 import { BaseService } from './base.service';
 import { PlatformDTO } from '../model/platform-dto';
@@ -25,10 +25,10 @@ export class PlatformService extends BaseService<Platform> {
   private platformDtoSubject = new Subject<PlatformDTO>();
   private platformsDtoSubject = new Subject<PlatformDTO[]>();
 
-  public create(platform: Platform, file: File, subfilters: Subfilter[]): Observable<string> {
-    const formData = new FormData();
-    formData.append('platform', JSON.stringify(platform));
-    formData.append('file', file);
+  private platformBehaviorSubject = new BehaviorSubject<Platform>({} as Platform);
+  platform$ = this.platformSubject.asObservable();
+
+  public create(formData: FormData, subfilters: Subfilter[]): Observable<string> {
     formData.append('subfilters', JSON.stringify(subfilters, ['id']));
     return this.http.post<string>(`${this.urlBase}/logo`, formData);
   }
@@ -37,8 +37,10 @@ export class PlatformService extends BaseService<Platform> {
     return this.http.get<PlatformDTO>(`${this.urlBase}/dto/${platformId}`).pipe(
       tap((dto: PlatformDTO) => {
         this.plat = dto;
-        this.plat.logo = `data:image/png;base64,${dto.logo}`; // Aqui convertemos o logo para o formato correto
-        this.platformDtoSubject.next(this.plat); // Emite os dados corretamente
+        this.plat.logo = `data:image/png;base64,${dto.logo}`;
+        this.plat.presentationImage = `data:image/png;base64,${dto.presentationImage}`;
+        this.plat.textTutorial = `data:image/png;base64,${dto.textTutorial}`;
+        this.platformDtoSubject.next(this.plat);
       })
     );
   }
@@ -46,11 +48,12 @@ export class PlatformService extends BaseService<Platform> {
   public getAllPlatformsDTO(): Observable<PlatformDTO[]> {
     return this.http.get<PlatformDTO[]>(`${this.urlBase}/dto/list`).pipe(
       tap((dtos: PlatformDTO[]) => {
-        // Para cada plataforma na lista, convertemos a logo para o formato correto
         dtos.forEach(dto => {
           dto.logo = `data:image/png;base64,${dto.logo}`;
+          dto.presentationImage = `data:image/png;base64,${dto.presentationImage}`;
+          dto.textTutorial = `data:image/png;base64,${dto.textTutorial}`;
         });
-        this.platformsDtoSubject.next(dtos); // Emite a lista atualizada de plataformas
+        this.platformsDtoSubject.next(dtos);
       })
     );
   }
@@ -60,5 +63,13 @@ export class PlatformService extends BaseService<Platform> {
       .get<Platform[]>(this.urlBase)
       .subscribe((platform) => this.platformSubject.next(platform));
     return this.platformSubject.asObservable();
+  }
+
+  updatePlatform(updatedPlatform: Platform) {
+    this.platformBehaviorSubject.next(updatedPlatform);
+  }
+
+  getCurrentPlatform(): Platform {
+    return this.platformBehaviorSubject.getValue();
   }
 }

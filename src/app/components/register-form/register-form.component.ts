@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { ToastrService } from '../../service/toastr.service';
+import {AuthService} from '../../service/auth.service';
 
 @Component({
   selector: 'app-register-form',
@@ -15,37 +16,27 @@ import { ToastrService } from '../../service/toastr.service';
 })
 export class RegisterFormComponent implements OnInit {
 
-  constructor(private router: Router, private userService: AppUserService, private toastrService: ToastrService) { }
+  constructor(private router: Router, private authService: AuthService, private toastrService: ToastrService) { }
 
-  public user = {} as AppUser;
+  public appUser = {} as AppUser;
 
   public insertUser() {
     if (this.validateRegistration()) {
-      this.userService.insert(this.user).subscribe(() => {
-        this.onLogin
+      this.authService.register(this.appUser).subscribe(() => {
+        this.router.navigate(['/login']);
+        this.toastrService.showSuccess('Cadastro realizado com sucesso!');
       });
     }
   }
 
-  onLogin() {
-    const isAuthenticated = true;
-
-    if (isAuthenticated) {
-      this.router.navigate(['/home']);
-    } else {
-      console.error('Login falhou');
-    }
-  }
-
   private validateRegistration(): boolean {
-    if (this.user.firstName = '') {
-      this.toastrService.showSuccess('Filtro salvo!');
+    if (!this.appUser.firstName || !this.appUser.lastName || !this.appUser.email) {
+      this.toastrService.showError('Todos os campos são obrigatórios!');
       return false;
     }
     return true;
   }
 
   ngOnInit(): void {
-    this.userService.emitEvent.subscribe((data) => { this.user = data });
   }
 }

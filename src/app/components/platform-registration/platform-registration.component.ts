@@ -14,15 +14,22 @@ import { AppUserService } from '../../service/app-user.service';
 import { AppUser } from '../../model/app-user';
 import { ImageService } from '../../service/image.service';
 import { Image } from '../../model/image';
+import {SafeUrlPipe} from '../../utils/safe-url-pipe';
 
 @Component({
   selector: 'app-platform-registration',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, SubheaderComponent, FormsModule],
+  imports: [CommonModule, HeaderComponent, SubheaderComponent, FormsModule, SafeUrlPipe],
   templateUrl: './platform-registration.component.html',
   styleUrl: './platform-registration.component.scss'
 })
 export class PlatformRegistrationComponent implements OnInit {
+
+  public selectedFiles: { [key: string]: File | null } = {
+    logo: null,
+    presentationImage: null,
+    textTutorial: null,
+  };
 
   public platform = {} as Platform;
   public filter = {} as Filter;
@@ -31,27 +38,33 @@ export class PlatformRegistrationComponent implements OnInit {
   public user = {} as AppUser;
   public filters!: Filter[];
   public subfilters!: Subfilter[];
-  public subfilterChecked: boolean = true;
-  //public platformSubfilter = {} as PlatformSubfilter;
-  public selectedFile!: File;
+  public selectedLogo!: File;
+  public selectedPresentationImage!: File;
+  public selectedTextTutorial!: File;
   imagePreview: string | ArrayBuffer | null = null;
   searchModalOpen: boolean = false;
 
-  modalAberta = false;
-  formulario = {
-
-  };
-
-  abrirModal() {
-    this.modalAberta = true;
-  }
-
-  atualizarFormulario(dados: any) {
-    this.formulario = { ...this.formulario, ...dados };
-  }
-
   steps = [1, 2, 3];
   currentStep = 0;
+
+  options = [
+    { value: 'option1', label: 'Opção 1', selected: false },
+    { value: 'option2', label: 'Opção 2', selected: false },
+    { value: 'option3', label: 'Opção 3', selected: false },
+    { value: 'option4', label: 'Opção 4', selected: false }
+  ];
+
+  dropdownVisible = false;
+
+  selectedOptions: string[] = [];
+
+  toggleDropdown() {
+    this.dropdownVisible = !this.dropdownVisible;
+  }
+
+  onOptionChange() {
+    this.selectedOptions = this.options.filter(option => option.selected).map(option => option.label);
+  }
 
   constructor(private cdr: ChangeDetectorRef,
     public platformService: PlatformService,
@@ -61,63 +74,57 @@ export class PlatformRegistrationComponent implements OnInit {
     private imageService: ImageService,
     private toastrService: ToastrService) { }
 
-  ngAfterViewInit() {
-    this.cdr.detectChanges();
-  }
-
   goToStep(stepIndex: number) {
+    this.saveCurrentState();
     this.currentStep = stepIndex;
   }
 
+  saveCurrentState() {
+    this.platformService.updatePlatform(this.platform);
+  }
+
   public insertPlatform() {
-    this.platformService.create(this.platform, this.selectedFile,  this.subfilters.filter((subfilter) => subfilter.checked)).subscribe();
-   // this.saveSelectedSubfilters();
+    const formData = new FormData();
+
+    if (this.selectedFiles['logo']) formData.append('logo', this.selectedFiles['logo']);
+    if (this.selectedFiles['presentationImage']) formData.append('presentationImage', this.selectedFiles['presentationImage']);
+    if (this.selectedFiles['textTutorial']) formData.append('textTutorial', this.selectedFiles['textTutorial']);
+    formData.append('platform', JSON.stringify(this.platform));
+
+    this.platformService.create(formData, this.subfilters.filter((subfilter) => subfilter.checked)).subscribe();
     this.toastrService.showSuccess('Plataforma salva!');
   }
 
-  /*private saveSelectedSubfilters(): void {
-    const selectedPlatformSubfilters = this.subfilters.filter((subfilter) => subfilter.checked);
+  public onLogoSelected(event: Event): void {
+    this.onFileSelected(event, 'logo')
+  }
 
-    selectedPlatformSubfilters.forEach(element => {
-      const platformSubfilter = {} as PlatformSubfilter;
-      platformSubfilter.platform = this.platform;
-      platformSubfilter.subfilter = element;
-      this.platformSubfilterService.insert(platformSubfilter).subscribe();
-    });
-  }*/
+  public onPresentationImageSelected(event: Event): void {
+    this.onFileSelected(event, 'presentationImage')
+  }
 
-  public onFileSelected(event: Event): void {
+  public onTextTutorialSelected(event: Event): void {
+    this.onFileSelected(event, 'textTutorial')
+  }
+
+  private onFileSelected(event: Event, fileKey: 'logo' | 'presentationImage' | 'textTutorial'): void {
     const target = event.target as HTMLInputElement;
-    if (target.files) {
-      this.selectedFile = target.files[0];
-      const reader = new FileReader();
+    if (target.files && target.files.length > 0) {
+      this.selectedFiles[fileKey] = target.files[0];
 
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
+      if (fileKey === 'logo' || fileKey === 'presentationImage') {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreview = reader.result;
+        };
+        reader.readAsDataURL(target.files[0]);
+      }
 
-      reader.readAsDataURL(this.selectedFile);
+      // Força atualização do input para exibir o nome do arquivo
+      // target.value = '';
+
+      this.saveCurrentState();
     }
-  }
-
-  public uploadFile(): void {
-    if (this.selectedFile) {
-      this.imageService.postImage(this.selectedFile).subscribe({
-        next: (response) => alert(response)
-      })
-    }
-  }
-
-  loadFilters(): void {
-    this.filterService.getFilters().subscribe((data) => {
-      this.filters = data;
-    });
-  }
-
-  loadSubfilters(): void {
-    this.subfilterService.getSubfilters().subscribe((data) => {
-      this.subfilters = data;
-    });
   }
 
   getSubfiltersByFilter(filter: Filter): Subfilter[] {
@@ -158,6 +165,7 @@ export class PlatformRegistrationComponent implements OnInit {
     this.filterService.emitEventFilter.subscribe((data) => { this.filter = data });
     this.subfilterService.emitEventSubfilter.subscribe((data) => { this.subfilter = data });
     this.userService.emitEvent.subscribe((data) => { this.user = data });
+    this.platform = this.platformService.getCurrentPlatform();
   }
 
 }

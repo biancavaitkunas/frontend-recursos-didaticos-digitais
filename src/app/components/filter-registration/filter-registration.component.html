@@ -1,21 +1,25 @@
 <app-header></app-header>
 <app-subheader></app-subheader>
+
 <div class="filter-management-container">
+  <!-- Botão Novo Filtro -->
   <div class="filters-section">
-    <button class=" button-style new-filter-button" (click)="addNewFilter(true)">
+    <button class="button-style new-filter-button" (click)="toggleNewFilter()">
       Novo Filtro
       <span class="icon-right">
         <img src="/icons/new-icon.png" alt="Adicionar" class="icon"/>
       </span>
     </button>
 
-    <div *ngIf="showNewFilterInput">
+    <!-- Novo Filtro (Aparece com animação) -->
+    <div *ngIf="showNewFilterInput" @fadeSlide (click)="toggleNewFilter()">
       <input class="input-lg" type="text" [(ngModel)]="filter.description" placeholder="Digite o nome do novo filtro"/>
       <button class="save-button button-style" (click)="insertFilter()">Salvar</button>
-      <button class="cancel-button button-style" (click)="addNewFilter(false)">Cancelar</button>
+      <button class="cancel-button button-style">Cancelar</button>
     </div>
 
-    <div *ngFor="let filter of filters" class="filter-item">
+    <!-- Lista de Filtros (Aparece com animação) -->
+    <div *ngFor="let filter of filters" class="filter-item" @fadeSlide>
       <button class="button-style filter-button" (click)="selectFilter(filter)">
         {{ filter.description }}
         <span class="icon-right">
@@ -26,35 +30,29 @@
     </div>
   </div>
 
-  <div class="subfilters-section" *ngIf="selectedFilter">
+  <!-- Seção de Subfiltros (Aparece com animação) -->
+  <div class="subfilters-section" *ngIf="selectedFilter" @fadeSlide>
     <div class="subfilters-header">
       <p class="title-filter">{{ selectedFilter.description }}</p>
-      <button class="button-style new-subfilter-button" (click)="addNewSubfilter(true)">Novo Subfiltro</button>
+      <button class="button-style new-subfilter-button" (click)="toggleNewSubfilter()">Novo Subfiltro</button>
     </div>
 
-    <div *ngIf="showNewSubfilterInput">
-      <input class="input-lg" type="text" [(ngModel)]="subfilter.description"
-             placeholder="Digite o nome do novo subfiltro"/>
+    <!-- Novo Subfiltro (Aparece com animação) -->
+    <div *ngIf="showNewSubfilterInput" @fadeSlide>
+      <input class="input-lg" type="text" [(ngModel)]="subfilter.description" placeholder="Digite o nome do novo subfiltro"/>
       <button class="save-button button-style" (click)="insertSubfilter()">Salvar</button>
-      <button class="cancel-button button-style" (click)="addNewSubfilter(false)">Cancelar</button>
+      <button class="cancel-button button-style" (click)="toggleNewSubfilter()">Cancelar</button>
     </div>
 
+    <!-- Lista de Subfiltros -->
     <ul>
-      <li *ngFor="let subfilter of subfilters" class="subfilter-item">
-        <span *ngIf="subfilter.id !== editingSubfilterId">{{ subfilter.description }}</span>
-
-        <span *ngIf="subfilter.id === editingSubfilterId" contenteditable="true"
-              [(ngModel)]="subfilter.description"
-              (blur)="updateSubfilter(subfilter)"
-              (keydown.enter)="updateSubfilter(subfilter)">
-        </span>
-
+      <li *ngFor="let subfilter of subfilters" class="subfilter-item" @fade>
+        <span>{{ subfilter.description }}</span>
         <div class="icon-container">
           <img src="/icons/edit-icon-default.png" alt="Editar" class="icon" (click)="editSubfilter(subfilter)"/>
           <img src="/icons/delete-icon-default.png" alt="Excluir" class="icon" (click)="removeSubfilter(subfilter)"/>
         </div>
       </li>
     </ul>
-
   </div>
 </div>

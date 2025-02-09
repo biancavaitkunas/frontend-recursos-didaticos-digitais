@@ -1,30 +1,68 @@
 <app-header></app-header>
 <app-subheader></app-subheader>
-<div class="carousel-container">
-    <p class="section-title">Últimos Assistidos</p>
-    <div class="carousel" id="carousel-last-watched">
-      <button class="nav-button left" (click)="scrollLeft('carousel-last-watched')">&#9664;</button>
-      <div class="carousel-items">
-        <div *ngFor="let item of lastWatched" class="carousel-item">
-          <img [src]="item.logoUrl" alt="{{ item.name }}">
-          <p>{{ item.name }}</p>
-        </div>
-      </div>
-      <button class="nav-button right" (click)="scrollRight('carousel-last-watched')">&#9654;</button>
+
+<body>
+<div class="search-container">
+  <input
+    type="text"
+    class="input-lg"
+    placeholder="Buscar plataforma..."
+    [(ngModel)]="searchQuery"
+    (input)="filterPlatforms()"
+  />
+  <img (click)="openFilterModal()" src="icons/filter-green.png" alt="Filtrar" class="filter-icon"/>
+</div>
+
+<div class="platform-grid">
+  <div *ngFor="let platform of filteredPlatforms" (click)="navigateToPlatform(platform.id)" class="platform-item">
+    <img [src]="platform.presentationImage" alt="{{ platform.name }}" class="platform-logo"/>
+    <div class="platform-info">
+      <h3>{{ platform.name }}</h3>
+      <p>{{ platform.description }}{{ platform.description.length > 100 ? '...' : '' }}</p>
     </div>
   </div>
-  
+</div>
+
+<!-- Modal de Filtros -->
+<div class="modal" *ngIf="isFilterModalOpen">
+  <div class="modal-content">
+    <span class="close-modal" (click)="closeFilterModal()">X</span>
+    <p class="modal-title">Selecione os filtros desejados</p>
+
+    <div class="filter-list">
+      <div *ngFor="let filter of filters" class="filter-item">
+        <p class="filter-title">{{ filter.description }}</p>
+        <div class="subfilters-grid">
+          <div *ngFor="let subfilter of getSubfiltersByFilter(filter)" class="subfilter-item">
+            <label>
+              <input type="checkbox" [(ngModel)]="subfilter.checked" (change)="toggleFilterSelection(subfilter)"/>
+              {{ subfilter.description }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button (click)="applyFilters()" class="save-button">Aplicar</button>
+      <button (click)="closeFilterModal()" class="cancel-button">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <p class="section-title">Últimos Assistidos</p>
   <div class="carousel-container">
-    <p class="section-title">Recomendados para Você</p>
-    <div class="carousel" id="carousel-recommended">
-      <button class="nav-button left" (click)="scrollLeft('carousel-recommended')">&#9664;</button>
-      <div class="carousel-items">
-        <div *ngFor="let item of recommended" class="carousel-item">
-          <img [src]="item.logoUrl" alt="{{ item.name }}">
-          <p>{{ item.name }}</p>
-        </div>
+    <button class="nav-button left" (click)="scrollCarousel(lastWatchedContainer, 'left')">‹</button>
+    <div #lastWatchedContainer class="carousel">
+      <div *ngFor="let video of lastWatched" class="video-card">
+        <img class="presentation" [src]="video.presentationImage" (click)="navigateToPlatform(video.id)">
+        <p>{{ video.name }}</p>
       </div>
-      <button class="nav-button right" (click)="scrollRight('carousel-recommended')">&#9654;</button>
     </div>
+    <button class="nav-button right" (click)="scrollCarousel(lastWatchedContainer, 'right')">›</button>
   </div>
-  
+</div>
+</body>
+

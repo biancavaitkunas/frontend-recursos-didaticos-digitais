@@ -7,8 +7,9 @@ export interface Platform {
     descriptionPlatform: string;
     urlVideo: string;
     urlPlatform: string;
-    textTutorial: string;
-    //logo: ArrayBuffer;
+    logo: File;
+    presentationImage: File;
+    textTutorial: File;
     //appUser: AppUser;
     //status: StatusPlatform;
 }

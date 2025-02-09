@@ -20,6 +20,11 @@
   font-family: var(--font-primary);
   font-weight: 200;
   margin-left: 20px;
+
+  &:hover {
+    background-color: #6a8366;
+    transform: scale(1.01);
+  }
 }
 
 .input-md {
@@ -163,6 +168,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-weight: 200;
   font-family: var(--font-primary);
 }
 
@@ -236,8 +242,8 @@ textarea {
 }
 
 .select-input {
-  height: 44px;
-  width: calc(100% - 20px);
+  height: 35px;
+  width: 100%;
   font-weight: 300;
 }
 
@@ -294,4 +300,122 @@ ul li {
 .confirm-button:hover {
   background-color: #266636;
 }
+
+
+
+//PRE VISUALIZAÇÃO
+
+.platform-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.platform-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.platform-logo {
+  width: 100px;
+  height: auto;
+}
+
+h1 {
+  font-size: 25px;
+  color: #53664f;
+  font-family: var(--font-primary);
+  font-weight: 340;
+  margin-left: 25px;
+  margin-top: 10px;
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 500px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.description {
+  margin-top: 20px;
+  font-size: 1rem;
+  font-family: var(--font-primary);
+  color: #666;
+}
+
+.platform-link {
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+a {
+  font-weight: 400;
+  color: #85a17d;
+  cursor: pointer;
+}
+
+.button-tutorial {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #85a17d;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: var(--font-primary);
+  font-weight: 200;
+  display: block;
+  margin: auto;
+  margin-right: 20px;
+}
+
+
+.select-dropdown {
+  position: relative;
+  width: calc(100% - 40px);
+  font-family: Arial, sans-serif;
+}
+
+.select-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.options-container {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.option-item input {
+  margin-right: 8px;
+}
+
+.arrow-down {
+  font-size: 12px;
+}
+
+.option-item:hover {
+  background-color: #f0f0f0;
+}
+
 

@@ -35,7 +35,7 @@ $theme: mat.define-theme(
 .mat-raised-button:hover {
     background-color: var(--primary-color-dark) !important;
 }
-  
+
 .mat-toolbar {
     background-color: var(--primary-color) !important;
     color: var(--text-color) !important;
@@ -103,8 +103,8 @@ $theme: mat.define-theme(
   margin-bottom: 20px;
 
   &:focus {
-    border-color: #32A041; 
-    box-shadow: 0 0 5px rgba(149, 151, 148, 0.5); 
+    border-color: #32A041;
+    box-shadow: 0 0 5px rgba(149, 151, 148, 0.5);
     outline: none;
   }
 }
@@ -124,8 +124,8 @@ $theme: mat.define-theme(
   margin-bottom: 20px;
 
   &:focus {
-    border-color: #32A041; 
-    box-shadow: 0 0 5px rgba(149, 151, 148, 0.5); 
+    border-color: #32A041;
+    box-shadow: 0 0 5px rgba(149, 151, 148, 0.5);
     outline: none;
   }
 }
@@ -145,8 +145,8 @@ $theme: mat.define-theme(
   margin-bottom: 20px;
 
   &:focus {
-    border-color: #32A041; 
-    box-shadow: 0 0 5px rgba(149, 151, 148, 0.5); 
+    border-color: #32A041;
+    box-shadow: 0 0 5px rgba(149, 151, 148, 0.5);
     outline: none;
   }
 }
@@ -166,8 +166,8 @@ $theme: mat.define-theme(
   margin-bottom: 20px;
 
   &:focus {
-    border-color: #32A041; 
-    box-shadow: 0 0 5px rgba(149, 151, 148, 0.5); 
+    border-color: #32A041;
+    box-shadow: 0 0 5px rgba(149, 151, 148, 0.5);
     outline: none;
   }
 }
@@ -189,6 +189,11 @@ $theme: mat.define-theme(
   border-radius: 10px;
   margin: 20px auto;
   cursor: pointer;
+
+  &:hover {
+    background-color: #6a8366;
+    transform: scale(1.01);
+  }
 }
 
 //MODAL
@@ -305,8 +310,12 @@ button .icon-search-modal {
   font-family: var(--font-primary);
 }
 
-html, body { 
+html, body {
     height: 100%;
     font-family: var(--font-primary);
 }
 body { margin: 0; font-family: var(--font-primary); background-color: #ffffff;}
+
+input[type="checkbox"] {
+  accent-color: #5f7e45;
+}

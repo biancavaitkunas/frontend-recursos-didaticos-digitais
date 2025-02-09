@@ -6,6 +6,13 @@ export interface AppUser {
     cpf: string;
     gender: string;
     birthDate: string;
-    login: string;
+    username: string;
     password: string;
+    role: string;
+}
+
+export enum UserRole {
+  ADMIN = 'ADMINISTRADOR',
+  PARTNER = 'COLABORADOR',
+  USER = 'USUÁRIO',
 }
