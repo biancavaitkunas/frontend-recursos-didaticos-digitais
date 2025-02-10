@@ -32,17 +32,19 @@ export class LoginComponent {
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
         this.authService.saveToken(response.token);
+        this.authService.saveUser(response.appUser);
+
         this.toastrService.showSuccess('Login realizado com sucesso!');
         this.router.navigate(['/home']);
         this.loadingService.hide();
       },
       error: (error) => {
         this.toastrService.showError(error.message);
-        this.loading = false;
         this.loadingService.hide();
       }
     });
   }
+
 
   private validateForm(): boolean {
     if (!this.username) {

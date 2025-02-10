@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import {Component, ElementRef, HostListener} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import {AuthService} from '../../service/auth.service';
-import {UserRole} from '../../model/app-user';
+import {AppUser, UserRole} from '../../model/app-user';
 
 @Component({
   selector: 'app-subheader',
@@ -11,11 +11,18 @@ import {UserRole} from '../../model/app-user';
   templateUrl: './subheader.component.html',
   styleUrl: './subheader.component.scss'
 })
-export class SubheaderComponent {
+export class SubheaderComponent implements OnInit {
   currentPageTitle = '';
   sidebarOpen = false;
+  currentUser: AppUser | null = null;
 
   constructor(private router: Router, private elementRef: ElementRef, protected readonly authService: AuthService) { }
+
+  ngOnInit() {
+    this.authService.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
+  }
 
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
@@ -34,5 +41,4 @@ export class SubheaderComponent {
     }
   }
 
-  protected readonly UserRole = UserRole;
 }

@@ -6,16 +6,18 @@
     <input type="text" class="input-lg" placeholder="Pesquise..." />
   </div>
 
+  <p>{{ welcomeMessage }}</p>
+
   <div class="icons">
-    <img src="/icons/home-white.png" alt="Home" class="icon search-icon" (click)="navigateTo('/')"/>
+<!--    <img src="/icons/home-white.png" alt="Home" class="icon search-icon" (click)="navigateTo('/')"/>-->
     <span (click)="toggleUserMenu()"><img src="/icons/user.png" alt="Usuário" class="icon user-icon"/></span>
-    <img src="/icons/bell.png" alt="Notificações" class="icon notification-icon" />
+<!--    <img src="/icons/bell.png" alt="Notificações" class="icon notification-icon" />-->
   </div>
 
   <div class="user-menu" *ngIf="isUserMenuOpen">
     <div class="arrow-up"></div>
     <ul>
-      <li (click)="navigateTo('')"><img src="/icons/user-green.png" alt="Perfil" class="menu-icon" /><a href="#">Perfil</a></li>
+      <li (click)="navigateTo('perfil')"><img src="/icons/user-green.png" alt="Perfil" class="menu-icon" /><a href="#">Perfil</a></li>
       <li><img src="/icons/settings-green.png" alt="Configurações" class="menu-icon" /><a href="/perfil">Configurações</a></li>
       <li (click)="logout()"><img src="/icons/logout-green.png" alt="Sair" class="menu-icon" /><a href="/login">Sair</a></li>
     </ul>

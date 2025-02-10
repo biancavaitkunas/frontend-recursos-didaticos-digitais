@@ -2,9 +2,6 @@ import {inject, Injectable} from '@angular/core';
 import {CanActivate, CanActivateFn, Router} from '@angular/router';
 import {AuthService} from '../service/auth.service';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
 export const AuthGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -14,7 +11,8 @@ export const AuthGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  const requiredRoles = route.data?.['roles'] as string[];
+  const requiredRoles = route.data?.['roles'] as string;
+  console.log('ROLES' + requiredRoles);
 
   if (requiredRoles && !authService.hasRole(requiredRoles)) {
     router.navigate(['/acesso-negado']);
