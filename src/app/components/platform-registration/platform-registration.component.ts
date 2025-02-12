@@ -15,6 +15,7 @@ import { AppUser } from '../../model/app-user';
 import { ImageService } from '../../service/image.service';
 import { Image } from '../../model/image';
 import {SafeUrlPipe} from '../../utils/safe-url-pipe';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-platform-registration',
@@ -38,40 +39,18 @@ export class PlatformRegistrationComponent implements OnInit {
   public user = {} as AppUser;
   public filters!: Filter[];
   public subfilters!: Subfilter[];
-  public selectedLogo!: File;
-  public selectedPresentationImage!: File;
-  public selectedTextTutorial!: File;
   imagePreview: string | ArrayBuffer | null = null;
   searchModalOpen: boolean = false;
+  confirmationModalOpen: boolean = false;
 
   steps = [1, 2, 3];
   currentStep = 0;
 
-  options = [
-    { value: 'option1', label: 'Opção 1', selected: false },
-    { value: 'option2', label: 'Opção 2', selected: false },
-    { value: 'option3', label: 'Opção 3', selected: false },
-    { value: 'option4', label: 'Opção 4', selected: false }
-  ];
-
-  dropdownVisible = false;
-
-  selectedOptions: string[] = [];
-
-  toggleDropdown() {
-    this.dropdownVisible = !this.dropdownVisible;
-  }
-
-  onOptionChange() {
-    this.selectedOptions = this.options.filter(option => option.selected).map(option => option.label);
-  }
-
-  constructor(private cdr: ChangeDetectorRef,
+  constructor(private router: Router,
     public platformService: PlatformService,
     private filterService: FilterService,
     private subfilterService: SubfilterService,
     private userService: AppUserService,
-    private imageService: ImageService,
     private toastrService: ToastrService) { }
 
   goToStep(stepIndex: number) {
@@ -91,8 +70,22 @@ export class PlatformRegistrationComponent implements OnInit {
     if (this.selectedFiles['textTutorial']) formData.append('textTutorial', this.selectedFiles['textTutorial']);
     formData.append('platform', JSON.stringify(this.platform));
 
-    this.platformService.create(formData, this.subfilters.filter((subfilter) => subfilter.checked)).subscribe();
-    this.toastrService.showSuccess('Plataforma salva!');
+    this.platformService.create(formData, this.subfilters.filter((subfilter) => subfilter.checked)).subscribe(() => {
+      this.toastrService.showSuccess('Plataforma salva!');
+      this.confirmationModalOpen = true;
+    });
+  }
+
+  public goToHome() {
+    this.platform = { id: 0};
+    this.router.navigate(['/home']);
+    this.confirmationModalOpen = false;
+  }
+
+  public registerNewPlatform() {
+    this.platform = { id: 0};
+    this.confirmationModalOpen = false;
+    this.goToStep(0);
   }
 
   public onLogoSelected(event: Event): void {
@@ -119,9 +112,6 @@ export class PlatformRegistrationComponent implements OnInit {
         };
         reader.readAsDataURL(target.files[0]);
       }
-
-      // Força atualização do input para exibir o nome do arquivo
-      // target.value = '';
 
       this.saveCurrentState();
     }
@@ -157,6 +147,24 @@ export class PlatformRegistrationComponent implements OnInit {
     this.platform.descriptionPlatform = platform.descriptionPlatform;
     this.platform.urlVideo = platform.urlVideo;
     this.closeSearchModal();
+  }
+
+  formatYouTubeUrl(url: string): string {
+    if (!url) return '';
+
+    const youtubeEmbedBase = 'https://www.youtube.com/embed/';
+
+    if (url.includes('youtube.com/embed/')) {
+      return url.split('?')[0];
+    }
+
+    const videoIdMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)/);
+
+    if (videoIdMatch && videoIdMatch[1]) {
+      return `${youtubeEmbedBase}${videoIdMatch[1]}`;
+    }
+
+    return url;
   }
 
   ngOnInit(): void {

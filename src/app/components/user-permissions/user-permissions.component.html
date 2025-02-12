@@ -36,6 +36,21 @@
       <p class="modal-title">Permissões para {{ selectedUser.firstName }}</p>
 
       <div class="permission-section">
+        <p>Permissão</p>
+        <div class="items-checkbox">
+          <label>
+            <input type="checkbox"  />Usuário
+          </label>
+          <label>
+            <input type="checkbox" />Colaborador
+          </label>
+          <label>
+            <input type="checkbox" />Administrador
+          </label>
+        </div>
+      </div>
+
+      <div class="permission-section">
         <p>Tipo de Colaboração</p>
         <div *ngFor="let collaboration of collaborationTypes" class="items-checkbox">
           <label>

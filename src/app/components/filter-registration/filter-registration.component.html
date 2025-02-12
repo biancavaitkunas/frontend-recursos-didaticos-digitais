@@ -12,7 +12,7 @@
     </button>
 
     <!-- Novo Filtro (Aparece com animação) -->
-    <div *ngIf="showNewFilterInput" @fadeSlide (click)="toggleNewFilter()">
+    <div *ngIf="showNewFilterInput" @fadeSlide>
       <input class="input-lg" type="text" [(ngModel)]="filter.description" placeholder="Digite o nome do novo filtro"/>
       <button class="save-button button-style" (click)="insertFilter()">Salvar</button>
       <button class="cancel-button button-style">Cancelar</button>
@@ -23,7 +23,7 @@
       <button class="button-style filter-button" (click)="selectFilter(filter)">
         {{ filter.description }}
         <span class="icon-right">
-          <img src="/icons/edit-icon-default.png" alt="Editar" class="icon" (click)="editFilter(filter)"/>
+<!--          <img src="/icons/edit-icon-default.png" alt="Editar" class="icon" (click)="editFilter(filter)"/>-->
           <img src="/icons/delete-icon-default.png" alt="Excluir" class="icon" (click)="removeFilter(filter)"/>
         </span>
       </button>
@@ -49,7 +49,7 @@
       <li *ngFor="let subfilter of subfilters" class="subfilter-item" @fade>
         <span>{{ subfilter.description }}</span>
         <div class="icon-container">
-          <img src="/icons/edit-icon-default.png" alt="Editar" class="icon" (click)="editSubfilter(subfilter)"/>
+<!--          <img src="/icons/edit-icon-default.png" alt="Editar" class="icon" (click)="editSubfilter(subfilter)"/>-->
           <img src="/icons/delete-icon-default.png" alt="Excluir" class="icon" (click)="removeSubfilter(subfilter)"/>
         </div>
       </li>

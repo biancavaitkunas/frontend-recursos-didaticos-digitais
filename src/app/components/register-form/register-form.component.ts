@@ -22,9 +22,18 @@ export class RegisterFormComponent implements OnInit {
 
   public insertUser() {
     if (this.validateRegistration()) {
-      this.authService.register(this.appUser).subscribe(() => {
-        this.router.navigate(['/login']);
-        this.toastrService.showSuccess('Cadastro realizado com sucesso!');
+      this.authService.register(this.appUser).subscribe({
+        next: (user: AppUser) => {
+          if (user) {
+            this.toastrService.showSuccess('Cadastro realizado com sucesso!');
+            this.router.navigate(['/login']);
+          } else {
+            this.toastrService.showError('Erro inesperado ao cadastrar. Tente novamente.');
+          }
+        },
+        error: (err) => {
+          this.toastrService.showError('Erro ao cadastrar: ' + (err.error?.message || 'Tente novamente mais tarde.'));
+        }
       });
     }
   }
@@ -36,6 +45,7 @@ export class RegisterFormComponent implements OnInit {
     }
     return true;
   }
+
 
   ngOnInit(): void {
   }

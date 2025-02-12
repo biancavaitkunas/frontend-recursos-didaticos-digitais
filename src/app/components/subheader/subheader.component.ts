@@ -34,6 +34,10 @@ export class SubheaderComponent implements OnInit {
     this.sidebarOpen = false;
   }
 
+  logout(){
+    this.authService.logout();
+  }
+
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     if (this.sidebarOpen && !this.elementRef.nativeElement.contains(event.target)) {

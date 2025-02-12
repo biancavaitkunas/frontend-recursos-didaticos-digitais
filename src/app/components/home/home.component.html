@@ -22,6 +22,20 @@
     </div>
   </div>
 </div>
+<div class="section">
+  <p class="section-title">Últimos Assistidos</p>
+  <div class="carousel-container">
+    <button class="nav-button left" (click)="scrollCarousel(lastWatchedContainer, 'left')">‹</button>
+    <div #lastWatchedContainer class="carousel">
+      <div *ngFor="let video of lastWatched" class="video-card">
+        <img class="presentation" [src]="video.presentationImage" (click)="navigateToPlatform(video.id)">
+        <p>{{ video.name }}</p>
+      </div>
+    </div>
+    <button class="nav-button right" (click)="scrollCarousel(lastWatchedContainer, 'right')">›</button>
+  </div>
+</div>
+</body>
 
 <!-- Modal de Filtros -->
 <div class="modal" *ngIf="isFilterModalOpen">
@@ -49,20 +63,4 @@
     </div>
   </div>
 </div>
-
-
-<div class="section">
-  <p class="section-title">Últimos Assistidos</p>
-  <div class="carousel-container">
-    <button class="nav-button left" (click)="scrollCarousel(lastWatchedContainer, 'left')">‹</button>
-    <div #lastWatchedContainer class="carousel">
-      <div *ngFor="let video of lastWatched" class="video-card">
-        <img class="presentation" [src]="video.presentationImage" (click)="navigateToPlatform(video.id)">
-        <p>{{ video.name }}</p>
-      </div>
-    </div>
-    <button class="nav-button right" (click)="scrollCarousel(lastWatchedContainer, 'right')">›</button>
-  </div>
-</div>
-</body>
 

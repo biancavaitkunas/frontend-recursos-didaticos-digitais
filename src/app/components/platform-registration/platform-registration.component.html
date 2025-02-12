@@ -43,10 +43,7 @@
                 [(ngModel)]="platform.urlVideo" />
             </div>
 
-            <div class="form-group">
-              <label class="label">Imagem de apresentação:</label>
-              <input type="file" (change)="onPresentationImageSelected($event)" name="presentationImage" id="presentationImage" accept="image/*" class="input-lg" #fileInput/>
-            </div>
+
           </div>
 
           <div class="form-column right">
@@ -55,48 +52,48 @@
               <textarea class="input-lg" id="platformDescription" required [(ngModel)]="platform.descriptionPlatform"
                 name="platformDescription"></textarea>
             </div>
-            <div class="form-group">
-              <label class="label">Produtores Digitais:</label>
-              <div class="select-dropdown">
-                <div class="input-lg select-input" (click)="toggleDropdown()">
-                  <span>Selecione</span>
-                  <i class="arrow-down">&#9660;</i>
-                </div>
-                <div class="options-container" *ngIf="dropdownVisible">
-                  <div *ngFor="let option of options" class="option-item">
-                    <input
-                      type="checkbox"
-                      [id]="option.value"
-                      [(ngModel)]="option.selected"
-                      (change)="onOptionChange()"
-                    />
-                    <label [for]="option.value">{{ option.label }}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
+<!--            <div class="form-group">-->
+<!--              <label class="label">Produtores Digitais:</label>-->
+<!--              <div class="select-dropdown">-->
+<!--                <div class="input-lg select-input" (click)="toggleDropdown()">-->
+<!--                  <span>Selecione</span>-->
+<!--                  <i class="arrow-down">&#9660;</i>-->
+<!--                </div>-->
+<!--                <div class="options-container" *ngIf="dropdownVisible">-->
+<!--                  <div *ngFor="let option of options" class="option-item">-->
+<!--                    <input-->
+<!--                      type="checkbox"-->
+<!--                      [id]="option.value"-->
+<!--                      [(ngModel)]="option.selected"-->
+<!--                      (change)="onOptionChange()"-->
+<!--                    />-->
+<!--                    <label [for]="option.value">{{ option.label }}</label>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div class="form-group">
-              <label class="label">Editores de texto:</label>
-              <div class="select-dropdown">
-                <div class="input-lg select-input" (click)="toggleDropdown()">
-                  <span>Selecione</span>
-                  <i class="arrow-down">&#9660;</i>
-                </div>
-                <div class="options-container" *ngIf="dropdownVisible">
-                  <div *ngFor="let option of options" class="option-item">
-                    <input
-                      type="checkbox"
-                      [id]="option.value"
-                      [(ngModel)]="option.selected"
-                      (change)="onOptionChange()"
-                    />
-                    <label [for]="option.value">{{ option.label }}</label>
-                  </div>
-                </div>
-              </div>
+<!--            <div class="form-group">-->
+<!--              <label class="label">Editores de texto:</label>-->
+<!--              <div class="select-dropdown">-->
+<!--                <div class="input-lg select-input" (click)="toggleDropdown()">-->
+<!--                  <span>Selecione</span>-->
+<!--                  <i class="arrow-down">&#9660;</i>-->
+<!--                </div>-->
+<!--                <div class="options-container" *ngIf="dropdownVisible">-->
+<!--                  <div *ngFor="let option of options" class="option-item">-->
+<!--                    <input-->
+<!--                      type="checkbox"-->
+<!--                      [id]="option.value"-->
+<!--                      [(ngModel)]="option.selected"-->
+<!--                      (change)="onOptionChange()"-->
+<!--                    />-->
+<!--                    <label [for]="option.value">{{ option.label }}</label>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
 
-            </div>
+<!--            </div>-->
 <!--            <div class="form-group">-->
 <!--              <label class="label">Produtores Digitais:</label>-->
 <!--              <select class="input-lg select-input">-->
@@ -118,7 +115,12 @@
               <label class="label">Tutorial em texto:</label>
               <input type="file" (change)="onTextTutorialSelected($event)" id="textTutorial" accept="application/pdf" class="input-lg" #fileInput/>
             </div>
+            <div class="form-group">
+              <label class="label">Imagem de apresentação:</label>
+              <input type="file" (change)="onPresentationImageSelected($event)" name="presentationImage" id="presentationImage" accept="image/*" class="input-lg" #fileInput/>
+            </div>
           </div>
+
         </div>
 
         <div class="form-navigation-step1">
@@ -130,8 +132,7 @@
       <div class="platform-registration-step2-container">
         <p class="title-relacione">Relacione a plataforma com os filtros desejados</p>
         <div *ngFor="let filter of filters" class="filter-section">
-          <p class="filter-title"><img src="/icons/arrow-light-green.png" alt="Perfil" class="icon" />{{
-            filter.description }}</p>
+          <p class="filter-title"><img src="/icons/arrow-light-green.png" alt="Perfil" class="icon" />{{ filter.description }}</p>
           <div *ngFor="let subfilter of getSubfiltersByFilter(filter)" class="subfilter-item">
             <label>
               <input type="checkbox" [(ngModel)]="subfilter.checked" />{{ subfilter.description }}
@@ -160,7 +161,14 @@
             </div>
 
             <div class="video-container">
-              <iframe *ngIf="platform" [src]="platform.urlVideo | safeUrl" allowfullscreen></iframe>
+              <ng-container *ngIf="platform && platform.urlVideo; else noVideo">
+                <iframe [src]="formatYouTubeUrl(platform.urlVideo) | safeUrl" allowfullscreen></iframe>
+              </ng-container>
+              <ng-template #noVideo>
+                <div class="video-placeholder">
+                  <p>Selecione um vídeo</p>
+                </div>
+              </ng-template>
             </div>
 
             <div class="description" *ngIf="platform">
@@ -198,6 +206,18 @@
           {{ platform.namePlatform }}
         </p>
         <!-- <p *ngIf="searchResults.length === 0">Nenhum usuário encontrado</p> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Sucesso -->
+  <div class="search-modal modal-sucesso" *ngIf="confirmationModalOpen">
+    <div class="modal-content">
+      <span class="close-modal" (click)="closeSearchModal()">X</span>
+      <p>Plataforma cadastrada com sucesso!</p>
+      <div class="modal-buttons">
+        <button class="button-default" (click)="goToHome()">Ir para página inicial</button>
+        <button class="button-default" (click)="registerNewPlatform()">Cadastrar nova plataforma</button>
       </div>
     </div>
   </div>
