@@ -23,9 +23,4 @@ export class AppUserService extends BaseService<AppUser> {
     return this.userSubject.asObservable();
   }
 
-  public getById(id: number): Observable<AppUser> {
-    return this.http.get<AppUser>(`${this.endpoint}/${id}`);
-    //return this.userSubject.asObservable();
-  }
-
 }
