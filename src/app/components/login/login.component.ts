@@ -20,7 +20,6 @@ import {LoadingService} from '../../service/loading.service';
 export class LoginComponent {
   username!: string;
   password!: string;
-  loading = false;
 
   constructor(private router: Router, private readonly authService: AuthService, private toastrService: ToastrService, private loadingService: LoadingService) {
   }

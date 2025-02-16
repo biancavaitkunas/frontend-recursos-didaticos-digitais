@@ -10,9 +10,3 @@ export interface AppUser {
     password: string;
     role: string;
 }
-
-export enum UserRole {
-  ADMIN = 'ADMINISTRADOR',
-  PARTNER = 'COLABORADOR',
-  USER = 'USUÁRIO',
-}

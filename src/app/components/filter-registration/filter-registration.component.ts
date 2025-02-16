@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import { HeaderComponent } from "../header/header.component";
-import { SubheaderComponent } from "../subheader/subheader.component";
-import { FormsModule } from '@angular/forms';
-import { FilterService } from '../../service/filter.service';
-import { Filter } from '../../model/filter';
-import { SubfilterService } from '../../service/subfilter.service';
-import { Subfilter } from '../../model/subfilter';
-import { ToastrService } from '../../service/toastr.service';
+import {CommonModule} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {HeaderComponent} from "../header/header.component";
+import {SubheaderComponent} from "../subheader/subheader.component";
+import {FormsModule} from '@angular/forms';
+import {FilterService} from '../../service/filter.service';
+import {Filter} from '../../model/filter';
+import {SubfilterService} from '../../service/subfilter.service';
+import {Subfilter} from '../../model/subfilter';
+import {ToastrService} from '../../service/toastr.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
@@ -99,14 +99,6 @@ export class FilterRegistrationComponent implements OnInit {
   selectFilter(filter: Filter) {
     this.selectedFilter = filter;
     this.getSubfilterByFilter();
-  }
-
-  editFilter(filter: Filter) {
-    this.editingSubfilterId = filter.id;
-  }
-
-  editSubfilter(subfilter: Subfilter) {
-    this.editingSubfilterId = subfilter.id;
   }
 
   removeFilter(filter: Filter) {

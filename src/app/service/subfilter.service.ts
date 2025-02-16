@@ -1,8 +1,8 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Subfilter } from '../model/subfilter';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, tap } from 'rxjs';
-import { Filter } from '../model/filter';
+import {EventEmitter, Injectable} from '@angular/core';
+import {Subfilter} from '../model/subfilter';
+import {HttpClient} from '@angular/common/http';
+import {Observable, tap} from 'rxjs';
+import {Filter} from '../model/filter';
 import {BaseService} from './base.service';
 
 @Injectable({

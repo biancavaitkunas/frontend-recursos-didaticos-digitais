@@ -52,64 +52,6 @@
               <textarea class="input-lg" id="platformDescription" required [(ngModel)]="platform.descriptionPlatform"
                 name="platformDescription"></textarea>
             </div>
-<!--            <div class="form-group">-->
-<!--              <label class="label">Produtores Digitais:</label>-->
-<!--              <div class="select-dropdown">-->
-<!--                <div class="input-lg select-input" (click)="toggleDropdown()">-->
-<!--                  <span>Selecione</span>-->
-<!--                  <i class="arrow-down">&#9660;</i>-->
-<!--                </div>-->
-<!--                <div class="options-container" *ngIf="dropdownVisible">-->
-<!--                  <div *ngFor="let option of options" class="option-item">-->
-<!--                    <input-->
-<!--                      type="checkbox"-->
-<!--                      [id]="option.value"-->
-<!--                      [(ngModel)]="option.selected"-->
-<!--                      (change)="onOptionChange()"-->
-<!--                    />-->
-<!--                    <label [for]="option.value">{{ option.label }}</label>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-
-<!--            <div class="form-group">-->
-<!--              <label class="label">Editores de texto:</label>-->
-<!--              <div class="select-dropdown">-->
-<!--                <div class="input-lg select-input" (click)="toggleDropdown()">-->
-<!--                  <span>Selecione</span>-->
-<!--                  <i class="arrow-down">&#9660;</i>-->
-<!--                </div>-->
-<!--                <div class="options-container" *ngIf="dropdownVisible">-->
-<!--                  <div *ngFor="let option of options" class="option-item">-->
-<!--                    <input-->
-<!--                      type="checkbox"-->
-<!--                      [id]="option.value"-->
-<!--                      [(ngModel)]="option.selected"-->
-<!--                      (change)="onOptionChange()"-->
-<!--                    />-->
-<!--                    <label [for]="option.value">{{ option.label }}</label>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <label class="label">Produtores Digitais:</label>-->
-<!--              <select class="input-lg select-input">-->
-<!--                <option value="" disabled selected>Selecione um produtor</option>-->
-<!--                <option value="produtor1">Produtor 1</option>-->
-<!--                <option value="produtor2">Produtor 2</option>-->
-<!--              </select>-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <label class="label">Editores:</label>-->
-<!--              <select class="input-lg select-input">-->
-<!--                <option value="" disabled selected>Selecione um editor</option>-->
-<!--                <option value="editor1">Editor 1</option>-->
-<!--                <option value="editor2">Editor 2</option>-->
-<!--              </select>-->
-<!--            </div>-->
 
             <div class="form-group">
               <label class="label">Tutorial em texto:</label>
@@ -205,7 +147,6 @@
         <p *ngFor="let platform of searchResults" (click)="populatePlatform(platform)">
           {{ platform.namePlatform }}
         </p>
-        <!-- <p *ngIf="searchResults.length === 0">Nenhum usuário encontrado</p> -->
       </div>
     </div>
   </div>

@@ -113,8 +113,4 @@ export class HomeComponent implements OnInit {
     container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
   }
 
-  // navigateToPlatform(platformId: number): void {
-  //   this.router.navigate([`/plataformas/${platformId}`]);
-  // }
-
 }

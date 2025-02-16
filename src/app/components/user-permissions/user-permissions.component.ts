@@ -24,7 +24,6 @@ export class UserPermissionsComponent implements OnInit {
   users!: AppUser[];
   collaborationTypes!: CollaborationType[];
   permissions!: Permission[];
-  usersSearch!: AppUser[];
   searchResults!: AppUser[];
   searchQuery: string = '';
   selectedUser!: AppUser;
@@ -38,7 +37,6 @@ export class UserPermissionsComponent implements OnInit {
 
   closePermissionsModal() {
     this.permissionsModalOpen = false;
-    //this.selectedUser = null;
   }
 
   savePermissions() {

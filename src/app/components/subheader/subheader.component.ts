@@ -1,8 +1,8 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import {AuthService} from '../../service/auth.service';
-import {AppUser, UserRole} from '../../model/app-user';
+import {AppUser} from '../../model/app-user';
 
 @Component({
   selector: 'app-subheader',

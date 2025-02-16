@@ -9,9 +9,7 @@
   <p>{{ welcomeMessage }}</p>
 
   <div class="icons">
-<!--    <img src="/icons/home-white.png" alt="Home" class="icon search-icon" (click)="navigateTo('/')"/>-->
     <span (click)="toggleUserMenu()"><img src="/icons/user.png" alt="Usuário" class="icon user-icon"/></span>
-<!--    <img src="/icons/bell.png" alt="Notificações" class="icon notification-icon" />-->
   </div>
 
   <div class="user-menu" *ngIf="isUserMenuOpen">

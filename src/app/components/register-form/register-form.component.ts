@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AppUserService } from '../../service/app-user.service';
-import { AppUser } from '../../model/app-user';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
-import { ToastrService } from '../../service/toastr.service';
+import {Component, OnInit} from '@angular/core';
+import {AppUser} from '../../model/app-user';
+import {FormsModule} from '@angular/forms';
+import {Router, RouterModule} from '@angular/router';
+import {ToastrService} from '../../service/toastr.service';
 import {AuthService} from '../../service/auth.service';
 
 @Component({

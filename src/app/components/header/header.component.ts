@@ -1,13 +1,12 @@
 import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar'
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import {MatToolbarModule} from '@angular/material/toolbar'
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {CommonModule} from '@angular/common';
+import {Router} from '@angular/router';
 import {AuthService} from '../../service/auth.service';
-import {AppUser} from '../../model/app-user';
 import {FormsModule} from '@angular/forms';
 
 @Component({
